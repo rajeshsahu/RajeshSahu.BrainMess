@@ -35,8 +35,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="JCI.BrainMess, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="JCI.BrainMess">
       <HintPath>..\JCI.BrainMess\bin\Debug\JCI.BrainMess.exe</HintPath>
     </Reference>
     <Reference Include="System" />
@@ -54,7 +53,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="InputStrings.cs" />
+    <Compile Include="TestStrings.cs" />
     <Compile Include="UnitTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

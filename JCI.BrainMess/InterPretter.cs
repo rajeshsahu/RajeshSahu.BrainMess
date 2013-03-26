@@ -4,20 +4,20 @@
 namespace JCI.BrainMess
 {
 
-    public static class InterPretter
+    public class InterPretter
     {
 
         public const int TapeSize = 800;
-        public static int[] tape = new int[TapeSize];
-        public static int pointerIndex = 0; //Current Index of Tape
-        public static int pointerValue = 0; //Value at Current Index of Tape
+        public int[] tape = new int[TapeSize];
+        public int pointerIndex = 0; //Current Index of Tape
+        public int pointerValue = 0; //Value at Current Index of Tape
 
-        public static int indexOfOpeningBracket = 0;
-        public static int pointerIndexAtOpeningBracket = 0;
-        public static int charIndex = 0;
-        public static string outputString = string.Empty;
+        public int indexOfOpeningBracket = 0;
+        public int pointerIndexAtOpeningBracket = 0;
+        public int charIndex = 0;
+        public string outputString = string.Empty;
 
-        public static void Interpret(string inputString)
+        public void Interpret(string inputString)
         {
             for (charIndex = 0; charIndex < inputString.Length; charIndex++)
                 switch (inputString[charIndex].ToString())
@@ -51,42 +51,42 @@ namespace JCI.BrainMess
 
 
 
-        public static void IncreaseIndexValue()
+        public void IncreaseIndexValue()
         {
             ++tape[pointerIndex];
         }
 
-        public static void DecreaseIndexValue()
+        public void DecreaseIndexValue()
         {
             --tape[pointerIndex];
         }
-        public static void MoveToPreviousIndex()
+        public void MoveToPreviousIndex()
         {
             --pointerIndex;
         }
 
-        public static void MoveToNextIndex()
+        public void MoveToNextIndex()
         {
             ++pointerIndex;
         }
 
-        public static void StartLoop()
+        public void StartLoop()
         {
             pointerIndexAtOpeningBracket = pointerIndex;
             indexOfOpeningBracket = charIndex;
         }
-        public static void EndLoop()
+        public void EndLoop()
         {
             if (tape[pointerIndexAtOpeningBracket] > 0)
                 charIndex = indexOfOpeningBracket;
         }
 
-        public static void WriteIndexValue()
+        public void WriteIndexValue()
         {
             Console.Write(Convert.ToChar((tape[pointerIndex])));
             outputString += Convert.ToChar((tape[pointerIndex]));
         }
-        public static void ReadIndexValue()
+        public void ReadIndexValue()
         {
             tape[pointerIndex] = (int)Console.ReadKey().KeyChar;
         }

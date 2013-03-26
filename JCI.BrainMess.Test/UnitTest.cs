@@ -1,11 +1,13 @@
-﻿using JCI.BrainMess;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+
 
 namespace JCI.BrainMess.Test
 {
     [TestClass]
     public class UnitTest
     {
+        private InterPretter objInterPretter;
+         
         [TestMethod]
         public void SetUpReady()
         {
@@ -13,82 +15,132 @@ namespace JCI.BrainMess.Test
         }
 
         [TestMethod]
-        public void TestMethod1()
+        public void TestHelloWorld()
         {
-            string inputString = InputStrings.input1;
-           //   
-            InterPretter.Interpret(inputString);
-            string expectedResult = "Hello World!\n";
-            string actualResule = InterPretter.outputString;
+            objInterPretter = new InterPretter();
+            string inputString = TestStrings.input1;
+            objInterPretter.Interpret(inputString);
+            string expectedResult = TestStrings.expectedResult1;
+            string actualResule = objInterPretter.outputString;
             Assert.AreEqual(expectedResult,actualResule);
         }
 
         [TestMethod]
-        public void TestMethod2()
+        public void TestHelloWorldExtended()
         {
-            string inputString = InputStrings.input2;
-           //   
-            InterPretter.Interpret(inputString);
-            string expectedResult = "Hello World!";
-            string actualResule = InterPretter.outputString;
+            objInterPretter = new InterPretter();
+            string inputString = TestStrings.input2;
+            objInterPretter.Interpret(inputString);
+            string expectedResult = TestStrings.expectedResult2;
+            string actualResule = objInterPretter.outputString;
             Assert.AreEqual(expectedResult,actualResule);
         }
 
         [TestMethod]
-        public void TestMethod31()
+        public void TestIncreaseIndexValue()
         {
-            InterPretter.Interpret("+");
-            Assert.AreEqual(1,InterPretter.tape[InterPretter.pointerIndex]);
+            objInterPretter = new InterPretter();
+            objInterPretter.IncreaseIndexValue();
+            Assert.AreEqual(1, objInterPretter.tape[objInterPretter.pointerIndex]);
         }
 
         [TestMethod]
-        public void TestMethod32()
+        public void TestIncreaseIndexValueViaInterpret()
         {
-            InterPretter.IncreaseIndexValue();
-            Assert.AreEqual(1, InterPretter.tape[InterPretter.pointerIndex]);
+            objInterPretter = new InterPretter();
+            objInterPretter.Interpret("+");
+            Assert.AreEqual(1,objInterPretter.tape[objInterPretter.pointerIndex]);
         }
+
+        
         [TestMethod]
-        public void TestMethod41()
+        public void TestDecreaseIndexValue()
         {
-            InterPretter.Interpret("-");
-            Assert.AreEqual(-1, InterPretter.tape[InterPretter.pointerIndex]);
+            objInterPretter = new InterPretter();
+            objInterPretter.DecreaseIndexValue();
+            Assert.AreEqual(-1, objInterPretter.tape[objInterPretter.pointerIndex]);
+        }
+        
+        [TestMethod]
+        public void TestDecreaseIndexValueViaInterpret()
+        {
+            objInterPretter = new InterPretter();
+            objInterPretter.Interpret("-");
+            Assert.AreEqual(-1, objInterPretter.tape[objInterPretter.pointerIndex]);
         }
 
         [TestMethod]
-        public void TestMethod42()
+        public void TestMoveToNextIndex()
         {
-            InterPretter.DecreaseIndexValue();
-            Assert.AreEqual(-1, InterPretter.tape[InterPretter.pointerIndex]);
+            objInterPretter = new InterPretter();
+            objInterPretter.MoveToNextIndex();
+            Assert.AreEqual(1, objInterPretter.pointerIndex);
         }
+        
         [TestMethod]
-        public void TestMethod51()
+        public void TestMoveToNextIndexViaInterpret()
         {
-            InterPretter.Interpret(">");
-            Assert.AreEqual(1, InterPretter.pointerIndex);
-        }
-
-        [TestMethod]
-        public void TestMethod52()
-        {
-            InterPretter.MoveToNextIndex();
-            Assert.AreEqual(1, InterPretter.pointerIndex);
+            objInterPretter = new InterPretter();
+            objInterPretter.Interpret(">");
+            Assert.AreEqual(1, objInterPretter.pointerIndex);
         }
 
         [TestMethod]
-        public void TestMethod61()
+        public void TestMoveToPreviousIndex()
         {
-            InterPretter.Interpret("><");
-            Assert.AreEqual(0, InterPretter.pointerIndex);
+            objInterPretter = new InterPretter();
+            objInterPretter.MoveToNextIndex();
+            objInterPretter.MoveToPreviousIndex();
+            Assert.AreEqual(0, objInterPretter.pointerIndex);
+        }
+        
+        [TestMethod]
+        public void TestMoveToPreviousIndexViaInterpret()
+        {
+            objInterPretter = new InterPretter();
+            objInterPretter.Interpret("><");
+            Assert.AreEqual(0, objInterPretter.pointerIndex);
+        }
+        
+
+        #region ---------------Negative Testing--------------------------------
+        
+        [TestMethod]
+        public void TestInputEmpty()
+        {
+            objInterPretter = new InterPretter();
+            objInterPretter.Interpret(TestStrings.negativeInput1);
+            Assert.AreEqual(0, objInterPretter.pointerIndex);
+        }
+        
+        [TestMethod]
+        public void TestInputSpace()
+        {
+            objInterPretter = new InterPretter();
+            objInterPretter.Interpret(TestStrings.negativeInput2);
+            Assert.AreEqual(0, objInterPretter.pointerIndex);
         }
 
         [TestMethod]
-        public void TestMethod62()
+        public void TestNoMove()
         {
-            InterPretter.MoveToNextIndex();
-            InterPretter.MoveToPreviousIndex();
-            Assert.AreEqual(0, InterPretter.pointerIndex);
+            objInterPretter = new InterPretter();
+            objInterPretter.Interpret(TestStrings.negativeInput3);
+            Assert.AreEqual(0, objInterPretter.tape[objInterPretter.pointerIndex]);
+            Assert.AreEqual(0, objInterPretter.pointerIndex);
+
+        }
+        [TestMethod]
+        public void TestInputInvalid()
+        {
+            objInterPretter = new InterPretter();
+            objInterPretter.Interpret(TestStrings.negativeInput4);
+            Assert.AreEqual(0, objInterPretter.tape[objInterPretter.pointerIndex]);
         }
 
-
+        #endregion ---------------------------------------------------------------
     }
+
+    
+
 }
